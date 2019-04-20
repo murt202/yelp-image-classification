@@ -1,1 +1,3 @@
-# yelp-image-classification
+# Yelp Image Classification
+
+This project aims at solving the yelp image recongnition and classsification challenge on kaggle. (https://www.kaggle.com/c/yelp-restaurant-photo-classification/overview) We have implemented different classification techniques like Logistic regression, Naive Bayes, Decision Trees, SVM, Neural Network, K-Nearest Neighbor and Random Forest to solve this challenge and have presented the results.
