@@ -6,14 +6,19 @@ import pickle as pkl
 import os
 import pandas as pd
 
-def features_extract():
-	# model = VGG16(weights='imagenet', include_top=False)
+def features_extract(type):
+	model = VGG16(weights='imagenet', include_top=False)
 	count = 0
 	count_2 = 0
-	total = len(glob.glob('../Data/train/train_photos/*.jpg'))
+	total = len(glob.glob('../Data/'+type+'/'+type+'_photos/*.jpg'))
 	feat = []
 	images = []
 	print(total)
+	path_list = glob.glob('../Data/'+type+'/'+type+'_photos/*.jpg')
+	imgs_list = [os.path.basename(p).split('.')[0] for p in path_list]
+	with open('../Data/'+type+'/list.txt', 'w') as file:
+		for img in imgs_list:
+			file.write(img+"\n")
 
 	for filename in path_list:
 		if count % 128 == 0 and count != 0:
@@ -110,5 +115,5 @@ def map_features_to_labels():
 
 
 if __name__ == "__main__":
-	# features_extract()
-	map_features_to_labels()
+	# features_extract('train')
+	map_feature
