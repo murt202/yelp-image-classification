@@ -1,10 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Apr 20 13:25:51 2019
-
-@author: ajay
-"""
+# helper file to read data
 import pandas as pd
 import os
 import pickle
