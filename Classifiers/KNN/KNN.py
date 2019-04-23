@@ -61,20 +61,22 @@ for filename in os.listdir(filePath + "flatten_features"):
 
 names.sort(key = lambda x: int(x.split('_')[2]))
 
-trainDataFile = names[:1286]
+# trainDataFile = names[:1286]
 # testDataFile = names[1286:]
-testDataFileSample = names[-1:]
-trainDataFileSample = names[:500]
+testDataFileSample = names[1300:]
+trainDataFileSample = names[:1300]
 
 data = []
 for name in testDataFileSample:
     file = open(filePath + "flatten_features/"+name, "rb")
-    data.append(pickle.load(file))
+    fileData = pickle.load(file)
+    # log(len(fileData))
+    data.extend(fileData)
     # break;
 
-test_data_length = len(data[0])
-log('Test data length' + str(test_data_length))
-x_test = np.asarray(data[0])
+test_data_length = len(data)
+log('Test data length ' + str(test_data_length))
+x_test = np.asarray(data)
 # print(x_test.shape)
 y_test = []
 
@@ -83,24 +85,27 @@ for i in range(len(x_test)):
     # print(getFeatLabelIndex(getFileNumber(testDataFileSample[0]))+ i)
     y_test.append(feat_label[getFeatLabelIndex(getFileNumber(testDataFileSample[0])) +  i])
 
+log('labels for test data are loaded')
 # print (y_test)
 
 # print(x_train.shape, y_train.shape)
 # test_error = []
 total_sample = len(trainDataFileSample) * 128
+log('Training sample ' + str(total_sample))
 k = int((math.sqrt(total_sample))/2)
-if(not k%2):
-    k+=1
+if(not k % 2):
+    k += 1
 
 log('The value of k '+ str(k))
 
 def getData(index, k, newData, currentData):
     if(index < k):
+        print(index, k, len(currentData))
         return currentData[index]
     else:
         return newData[index - k]
 
-final_k_data = []
+# final_k_data = []
 final_k_label = []
 final_sorted_dist = []
 for file in trainDataFileSample:
@@ -121,10 +126,10 @@ for file in trainDataFileSample:
         newKDist = [j.argsort()[:k] for j in temp_dist]
         for each in range(len(newKDist)):
             final_k_label[each] = [getData(j, k, k_label[each], final_k_label[each]) for j in newKDist[each]]
-            final_k_data[each] = [getData(j, k, k_data[each], final_k_data[each]) for j in newKDist[each]]
+            # final_k_data[each] = [getData(j, k, k_data[each], final_k_data[each]) for j in newKDist[each]]
         final_sorted_dist = np.asarray([ sorted(each)[:k] for each in temp_dist])
     else:
-        final_k_data.extend(k_data)
+        # final_k_data.extend(k_data)
         final_k_label.extend(k_label)
         final_sorted_dist.extend(dist)
 
