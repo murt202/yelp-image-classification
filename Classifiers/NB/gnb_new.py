@@ -5,12 +5,6 @@ Created on Tue Apr 23 18:29:05 2019
 @author: arvin
 """
 
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Apr 20 16:37:31 2019
-
-@author: arvin
-"""
 # helper file to read data
 import pandas as pd
 import os
