@@ -53,7 +53,7 @@ def training(train_indices):
                 w_x = pd.Series(np.dot(t_data.values,weights[x][1:]))
                 sigmoid_value = 1/(1+np.exp(-(w_x + weights[x][0])))
                 error = t_label - sigmoid_value
-                weights[1][0] += n*sum(error)
+                weights[x][0] += n*sum(error)
                 
                 for i in range(dim - 1):
                     grad = t_data.iloc[:,i] * error 
