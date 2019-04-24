@@ -61,13 +61,12 @@ for i in range(len(x_test)):
 
 log('labels for test data are loaded')
 
-# total_sample = len(trainDataFileSample) * 128
-# log('Training sample ' + str(total_sample))
-# k = int((math.sqrt(total_sample))/2)
-# if(not k % 2):
-#     k += 1
+total_sample = len(trainDataFileSample) * 128
+log('Training sample ' + str(total_sample))
+k = int((math.sqrt(total_sample))/2)
+if(not k % 2):
+    k += 1
 
-k = 50
 
 log('The value of k '+ str(k))
 
@@ -80,13 +79,16 @@ def getData(index, k, newData, currentData):
 
 final_k_label = []
 final_sorted_dist = []
-for file in trainDataFileSample:
-    print('processing ', file)
-    f = open(filePath + "flatten_features/"+file, "rb")
-    x_train = np.asarray(pickle.load(f))
+for fileIndex in range(0, len(trainDataFileSample), 3):
+    x_temp = []
     y_train = []
-    for i in range(len(x_train)):
-        y_train.append(feat_label[getFeatLabelIndex(getFileNumber(file)) +  i])
+    for file in trainDataFileSample[fileIndex: fileIndex+3]:
+        print('processing ', file)
+        f = pickle.load(open(filePath + "flatten_features/"+file, "rb"))
+        x_temp.extend(f)
+        for i in range(len(f)):
+            y_train.append(feat_label[getFeatLabelIndex(getFileNumber(file)) +  i])
+    x_train = np.asarray(x_temp)
     k_data, k_label, dist= test(x_train, y_train, x_test, y_test, k)
     temp_dist = []
     if (len(final_k_label)):
